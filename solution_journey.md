@@ -1,6 +1,6 @@
 # A step-by-step solution journey analysis.
 
-Internal thoughts generated during the solution to this problem.
+Internal thoughts generated during the resolution of this problem.
 
 ## Requirements:
 
@@ -29,165 +29,181 @@ than 4)
 
 #### First step
 
-I started working on this reading the pdf requirements. I have a lot of 
-  questions of the requirements after reading them. Normally I would
-  schedule a meeting to discuss requirements or send a list of questions
-  to the person that requires the solution but can't really do it in this case,
-  so for now, I will have to make some assumptions about the requirements, and the
-   solution (I don't really like this idea, and I'm worried it will
-   lead to awful decisions and a bad solution).
+I started working on this by reading the requirements in the pdf. I have many questions about the requirements 
+after reading them. Normally I would schedule a meeting to discuss the requirements or send a list of questions 
+to the person requiring the solution but this is something I can't do in this case so for now I'll have to make
+some assumptions about the requirements, and the solution ( I really don't like this idea, and I worry that it will 
+lead to bad decisions and a bad solution).
+
   
 #### Initial thoughts on the requirements
 
 - `The challenge is to create a program that computes some basic statistics on a collection 
   of small positive integers. You can assume all values will be less than 1,000.` Wonder
-  if the 1000 it's relevant? probably yes, if not why mentioned this requirement? After
-  a quick search, found that a python has a 1000 restriction with recursions (Whenever 
-  you exceed the recursion depth of 1000, you get an error in Python). So, should I assume
-  I need to use recursion to solve this problem? could be, still not sure, but if that's the
-  case where should be the best place to it? build_methods() maybe? however, build_methods() will
-  not have the number arguments to validate the creation of the result, that would be tricky. 
-  For example, how can I generate a list between A and B in the build_methods() using recursion, 
-  if I don't have A and B? that means that between() needs to be related somehow with the search but
-  that will trigger the restrictions (need to think more about this).
+  if the 1000 it's relevant? probably yes, if not why mentioned this requirement? I wonder if the 
+  1000 is relevant? probably yes, if not why was this requirement mentioned? After a quick search, 
+  I discovered that Python has a 1000 constraint with recursions (whenever 
+  you exceed the recursion depth of 1000, you get an error in Python). So should I assume that 
+  I need to use recursion to solve this problem? could this be the case? I'm not sure yet, 
+  but if that's the case, where should be the best place to do it? build_methods() maybe? 
+  however, build_methods() won't have the numeric arguments to validate the result build, 
+  that would be tricky. For example, how can I generate a list between A and B in build_methods() 
+  using recursion, if I don't have A and B? that means that between() must be somehow related to 
+  the search, but that will trigger the constraints (need to think more about this).
   
 - `The DataCapture object accepts numbers and returns an object for querying 
-  statistics about the inputs.` Here it's very clear I need to create a 
-  DataCapture class. Not completely sure about the `returns an object for querying 
-  statistics`. Does this mean I can create an additional class or does it mean I
-  have to use something more raw like `typer` to create a representation of an  
-  object with methods without explicitly creating a class? Not sure how im going to move
-  forward in this section. However, it's very clear that I need to return an object
-  that has inside these methods less(), greater() and between().
+  statistics about the inputs.` Here it is very clear that I need to create a DataCapture class. 
+  I'm not entirely sure about `returns an object to query for statistics`. Does this mean that 
+  I can create an additional class or that I have to use something simpler like `type` to 
+  create a representation of an object with methods without explicitly creating a class? 
+  I'm not sure how I'm going to proceed in this section. However, it is very clear that 
+  I need to return an object that has within these methods less(), greater() and between().
   
-- `You cannot import a library that solves it instantly`. Does this mean I can't use queues for example?
-    mmm probably not, probably it means I can't use a pre-built less(), greater() or between() methods. (First
-    assumption here.). 
+- `You cannot import a library that solves it instantly`. Does this mean I can't use queues, 
+  for example? hmm probably not, it probably means I can't use built-in methods for less(), great() 
+  or between() (First guess here).
   
-- `The methods add(), less(), greater(), and between() should have constant time O(1)` OK, 
-    this will be tricky, I would normally create O(n) methods for this kind of problems. No
-    issues with add() since a simple append will have an O(1) complexity, but it's a different story with
-    less(), greater(), and between(). In order to find values in a list, It must be an iteration
-    of a list or similar, and that will mean a O(n) complexity, so definitely this will required
-    an additional thought. This tells me that build_stats() will be a major generator of the results since
-    is the only method allow to have O(n) complexity, however build_stats() will not have the arguments 
-    sent to these methods, so that will be interesting.
+- `The methods add(), less(), greater(), and between() should have constant time O(1)` Ok, this 
+  is going to be tricky, normally I would create O(n) methods for this kind of problem. There 
+  are no problems with add() since a simple addition will have O(1) complexity, but it's a 
+  different story with less(), great() and between(). To find values in a list, it 
+  must be an iteration of a list or similar, and that will mean O(n) complexity, so this 
+  will definitely require some extra thought. This tells me that build_stats() will be an 
+  important generator of the results, as it is the only method that allows O(n) complexity, 
+  however build_stats() will not have the arguments passed to these methods, so it 
+  will be interesting.
+
   
-- `The method build_stats() can be at most linear O(n)` Like I mentioned before, this method will be a 
-    major helper to solve this problem. However, still can't figure how can this method 
-    be able to solve the searcher of numbers without knowing the limits (greater and/or lower than).
+- `The method build_stats() can be at most linear O(n)` As I mentioned before, 
+  this method will be of great help in solving this problem. However, I still 
+  can't figure out how this method can solve the number search process without 
+  knowing the limits (greater than and/or less than).
+
   
-- `Tests must be included in the submission.` No questions here, means I need to generate some unit tests
-    after solving the problem.
+- `Tests must be included in the submission.` There are no questions here, it means I 
+  need to generate some unit tests after solving the problem.
+
   
 - `Do not split error input validation between the command line code and the 
-  class methods, this is not something considered as a best practice.` mmm have several questions here,
-  I would normally ask this questions before anything else but not sure if this should
-  be considered proper and who should be the right person to ask? for now, will make some
-  assumption but probably should ask something about this, if not, it will probably lead
-  to wrong solutions.
-    1) `command line` Are we taking about a python cli or operative system command line to execute the
-       python code?
+  class methods, this is not something considered as a best practice.` hmm I have a number 
+  of questions here, i would normally ask these questions before anything else, but I'm not sure 
+  if this should be considered appropriate and who should be the right person to ask. For now, 
+  I'll make some assumptions, but I should probably ask something about this, if not, it will
+  probably lead to a wrong implementation.
+
+    1) `command line` Are we talking about an OS command line or python cli to run python code?
     2) Does this mean I need to create a python cli application? 
-    3) Does this mean I need to keep alive the python execution, so I can send 
-       add(), build_stats(), less(), greater(), between() commands, and check inputs 
-       (error input validation).
-    4) `error input validation` What kind of validation are we talking about? note sure, but
-        probably I need to first what does it mean about `command line`. Not sure if this is 
-        related to system command line or cli application in a .py file. Either option, still
-        have questions about what's consider an input and how to obtain those in the .py?
+    3) Does this mean I need to keep the python program execution alive, so I can 
+       send multiple add(), build_stats(), less(), great(), between() commands and check 
+       sent inputs (error input validation)?
+
+    4) `error input validation` What kind of validation are we talking about? not sure, but I 
+       probably need to know what `command line` means first. I'm not sure if this is related
+       to the system command line, or the cli app in a .py file. With either option, 
+       I still have questions about what is considered an input and how to get it 
+       into the .py file.
        
 - `Do not create a driver script via the command line, it is not necessary, we 
   are only seeking working classes and tests, as we can run the program via the 
-  Python repl.` I'm assuming this means that I just have to create the .py file
-  and that it can be executed with just `python filename.py`. (no need to something
-  fancy, not sure if I'm assuming correctly thought, probably one more of my 
-  assumptions).
+  Python repl.` I assume this means that I only have to create the .py file 
+  and that it can be run simply with `python filename.py`. (no need to do 
+  anything fancy, not sure if I'm assuming correctly, probably one 
+  more of my assumptions).
+
   
 - `Please apply any best practice you think will add value, but do not add extra 
-  feature than the requested.` Does this mean I can add classes, decorators, etc?
-  mmm probably yes, but I'm not sure if that's the intention or if it means I can
-  create the mentioned classes in the best possible way (without adding new classes
-  that will support)?. Not sure thought, will probably be defining an assumption
-  about this too.
+  feature than the requested.` Does this mean that I can add classes, 
+  decorators, etc? hmm probably yes, but I'm not sure if that's the 
+  intention or if it means that I can only create the mentioned classes 
+  in the best possible way (without adding new supporting classes)?. 
+  I'm not sure, it will probably also define an assumption on this.
+
   
 - `If you have questions or inconveniences to complete the test, 
-  don’t hesitate to ask your recruiter.` I would normally have a lof of questions
-  on requirements to make sure I understand correctly the required solution.
-  Like now as you can see, it's not an exception. Actually probably I have eve more questions
-  than normal since the required solution has some specific implementation requirements, but
-  for now, due to the origen of the process, I will try to write some implementations 
-  first and when I have something more solid will ask some questions to check results.
+  don’t hesitate to ask your recruiter.` I usually like to ask a lot 
+  of questions about the requirements to make sure I understand the
+  required solution correctly. Like now, as you can see, is no 
+  exception. Actually, I probably have more questions than usual since 
+  the required solution has some specific implementation requirements, 
+  but for now, due to the origin of the process, I'll try to write some
+  implementations first and when I have something more robust I'll 
+  ask some questions. to check the results.
+
   
     
 #### Initial thoughts on the solution:
 
-1) I started creating the DataCapture class skeleton (including
-  required methods).
-  
-2) After it, I started thinking about the methods' implementation.
+1) I started to create the skeleton of the DataCapture class 
+   (including the necessary methods).
+   
+2) After that, I started thinking about the implementation of the methods.
     - capture.add(n): 
       - Can have at most O(1) complexity.
       - A simple list_name.append(n) should be fine. -> O(1) complexity. 
-      - Did a lot of thinking about the lists, and if list is the best approach.
+      - I've thought about lists a lot, and I'm wondering if actually lists 
+        are the best approach.
       
     - stats = capture.build_stats()
         - Can have at most O(n) complexity.
           
         - Keep thinking about the 1000 number. 
           
-        - The only way I can think of right now to accomplish the O(1) for
-          the rest of the methods is to do the heavy calculation here, so,
-          wonder if I can somehow populate a set of possible outcomes to
-          use later in the methods, but, wondered, Can I somehow populate a 
-          set of possible outcomes before I get the methods arguments?
+        - The only way I can think of at the moment to achieve the O(1) 
+          in the methods is to do the heavy calculation here, 
+          so I'm wondering if I can somehow fill in a set of possible 
+          results here, so I can use them later. in the desired methods. 
+          However, I'm wondering if I can somehow complete a set of 
+          possible results before I get the method arguments?
           
-        - keep thinking about how to order the list without affecting the 
-          O(n) restrictions. Did a lot of research over internet about
-          sort algorithms and their complexity, and there aren't a lot
-          of options that accomplish the O(n) restriction. Most of the sort
-          algorithms don't accomplish this requirement. 
-          [SORT ALGORITHMS](https://www.geeksforgeeks.org/time-complexities-of-all-sorting-algorithms/)
+        - I keep thinking about how to sort the list without affecting the O(n) 
+          constraints. I've done a lot of research on the internet about sorting 
+          algorithms and their complexity, and there aren't many options that 
+          meet the O(n) constraint. Most sorting algorithms do not meet 
+          this requirement [SORT ALGORITHMS](https://www.geeksforgeeks.org/time-complexities-of-all-sorting-algorithms/)
           
-          I spent a **significant** amount of time here, looking for sorting 
-          options (including list, queue and different data structures),ying
-          different kind of python examples, until I finally found something 
-          interesting -> PriorityQueue. Because of that, I created a sort numbers
-          method able to sort a list of numbers with O(n) complexity. At first, 
-          I was not sure if the priorityQueue data type did actually accomplish 
-          the time complexity but multiple sources assure that was the case, 
-          so I decided to move forward with this solution (with some worries about
-          the selection but at least with better options than before.).
+        - I spent a **significant** amount of time here, looking at sorting options 
+          (including lists, queues, and different data structures), creating various
+          exercises/examples in Python, until I think I finally found something 
+          interesting -> PriorityQueue. Therefore, I created a number sort method 
+          capable of sorting a list of numbers with complexity O(n). At first, 
+          I wasn't sure if the priority queue's data type really met the time complexity, 
+          but multiple sources assure me that was the case, so I decided to go ahead
+          with this solution (with some concerns about the selection, but at 
+          least with better options than before.).
           
-          - Uses the heapq module in Python to create a priority queue. 
+            - Uses the heapq module in Python to create a priority queue. 
             
-          - This implementation has O(log n) time for insertion and extraction. 
-            The PriorityQueue uses the same heapq implementation internally 
-            and thus has the same time complexity (PriorityQueue is the classic 
-            OOP style of implementing and using Priority Queues).
+            - This implementation has O(log n) time for insertion and extraction. 
+              The PriorityQueue uses the same heapq implementation internally 
+              and thus has the same time complexity (PriorityQueue is the classic 
+              OOP style of implementing and using Priority Queues).
             
-          - The priority queue is an advanced type of the queue data structure. 
-            Instead of dequeuing the oldest element, a priority queue sorts
-            and dequeues elements based on their priorities. Since the 
-            queue.PriorityQueue class needs to maintain the order of
-            its elements, a sorting mechanism is required every time a new
-            element is enqueued. Python solves this by using a binary heap
-            to implement the priority queue. The Python priority
-            queue is built on the heapq module, which is basically a
-            binary heap with O(n) complexity. 
-          - Some sources [HERE](https://www.educative.io/answers/what-is-the-python-priority-queue),
-            [HERE](https://www.growingwiththeweb.com/data-structures/binary-heap/build-heap-proof/),
-            and [HERE](https://towardsdatascience.com/introduction-to-priority-queues-in-python-83664d3178c3)
-            for example.
+            - The priority queue is an advanced type of the queue data structure. 
+              Instead of dequeuing the oldest element, a priority queue sorts
+              and dequeues elements based on their priorities. Since the 
+              queue.PriorityQueue class needs to maintain the order of
+              its elements, a sorting mechanism is required every time a new
+              element is enqueued. Python solves this by using a binary heap
+              to implement the priority queue. The Python priority
+              queue is built on the heapq module, which is basically a
+              binary heap with O(n) complexity. 
+              
+            - Example of some sources [HERE](https://www.educative.io/answers/what-is-the-python-priority-queue),
+              [HERE](https://www.growingwiththeweb.com/data-structures/binary-heap/build-heap-proof/),
+              and [HERE](https://towardsdatascience.com/introduction-to-priority-queues-in-python-83664d3178c3).
             
-        - Until here, I figured out how to handle the sorting of the list, 
-          however still don't have a clear path of how to handle the rest of
-          the process to be able to extract the desired numbers with a
-          complexity of O(1) using the methods. What I know about this is that
-          I can't make attached iterations (since will increase the complexity, this 
-          could have been useful if I want to create a dict or something similar with
-          the mappings of the lower/greater numbers of each number in the list, so 
-          I can just access these mappings in the methods, but this is not an option).
+        - So far, I figured out how to handle the sorting of the list, however, 
+          I still don't have a clear path how to handle the rest of the process 
+          to be able to extract the desired numbers with O(1) complexity using the 
+          methods. What I know about this is that I can't do nested iterations 
+          (a for inside a for, for example, since it will exceed the complexity 
+          limit) ((This could have been useful if I wanted to create a dict or 
+          something similar with the major/minor number mappings for each 
+          existing number in the list, so I could access these mappings in 
+          the methods, but this is not an option, since it will require a for 
+          inside a for, to process each number in the list.).
+          
+HERE
     
     - stats.less(n), stats.less(n), stats.between(min_n, max_n):
         - Still, not sure how to handle this, I spent a significant amount of time thinking on this,
