@@ -22,5 +22,5 @@ than a value, or within a range.
 ## Details
 
 You can find more details  about the solution in the `solution_journey.md`
-file located in the `data_capture` folder.
+file located in the `data_capture` repo.
 
