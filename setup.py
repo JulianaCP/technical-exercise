@@ -11,7 +11,7 @@ setup(
     name="data-capture",
     author="Juliana Campos",
     author_email="juliana.campos.parajeles@gmail.com",
-    version="0.0.1",
+    version="0.1.0",
     description="Data capture and stats class.",
     packages=find_packages(exclude=['test']),
     install_requires=[],

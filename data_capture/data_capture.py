@@ -149,15 +149,15 @@ class DataCapture:
         for number in range(sorted_numbers[0], sorted_numbers[-1] + 1, 1):
             if number in sorted_numbers:
                 # extract min index and max index of each number.
-                mappings[number] = {
-                    "min_index": sorted_numbers.index(number),
-                    "max_index": len(sorted_numbers) - inverted_numbers.index(number) - 1,
-                }
+                min_index = sorted_numbers.index(number)
+                max_index = len(sorted_numbers) - inverted_numbers.index(number) - 1
+                mappings[number] = {"min_index": min_index, "max_index": max_index}
                 previous_min_index = mappings[number]["max_index"] + 1
                 previous_max_index = mappings[number]["min_index"]
             else:
                 # fill out intermediate mappings of numbers that are not in the list.
-                mappings[number] = {"min_index": previous_min_index, "max_index": previous_max_index}
+                mappings[number] = {"min_index": previous_min_index,
+                                    "max_index": previous_max_index}
         return mappings
 
     def build_stats(self) -> Stats:

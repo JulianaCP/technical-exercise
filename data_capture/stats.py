@@ -80,7 +80,7 @@ class Stats:
 
     @accepts_integer_type
     def less(self, number: int) -> int:
-        """his method will return an integer presenting
+        """This method will return an integer presenting
         how many numbers in the sorted list are lower than
         the given number.
 
