@@ -55,13 +55,14 @@ add an extra feature than the requested.
 - The method build_stats() can be at most linear O(n).
 - Apply the best practices you know.
 
+
 ## Implemented Solution
 
 ### Installation
 
 - `git clone git@github.com:JulianaCP/data_capture.git`
-- `cd data_capture`
-- `pip install -r requirements.txt`
+- `cd technical-exercise`
+- `pip install .`
   
 ### Run application
 
@@ -73,6 +74,5 @@ add an extra feature than the requested.
 
 ### Details
 
-You can find more details  about the solution in the `solution_journey.md`
-file located in the `data_capture` repo.
+
 
