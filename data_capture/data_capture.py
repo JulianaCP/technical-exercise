@@ -140,20 +140,24 @@ class DataCapture:
         :rtype: Dict
         """
         mappings = {}
-
-        # Reverts the sorted list of numbers.
         inverted_numbers = sorted_numbers[::-1]
-
-        # create min and max indexes for each number.
-        for number in sorted_numbers:
-            # index first appearance of the number.
-            min_index = sorted_numbers.index(number)
-
-            # index of the last appearance of the number.
-            max_index = len(sorted_numbers) - inverted_numbers.index(number) - 1
-
-            # min and max index mapped for each number.
-            mappings[number] = {"max_index": max_index, "min_index": min_index}
+        previous_min_index = None
+        previous_max_index = None
+        # iterate over all possible numbers between the minimum number
+        # and the list and th  maximum added  number  in the list
+        # (to map all possible numbers in the range).
+        for number in range(sorted_numbers[0], sorted_numbers[-1] + 1, 1):
+            if number in sorted_numbers:
+                # extract min index and max index of each number.
+                mappings[number] = {
+                    "min_index": sorted_numbers.index(number),
+                    "max_index": len(sorted_numbers) - inverted_numbers.index(number) - 1,
+                }
+                previous_min_index = mappings[number]["max_index"] + 1
+                previous_max_index = mappings[number]["min_index"]
+            else:
+                # fill out intermediate mappings of numbers that are not in the list.
+                mappings[number] = {"min_index": previous_min_index, "max_index": previous_max_index}
         return mappings
 
     def build_stats(self) -> Stats:
@@ -168,15 +172,6 @@ class DataCapture:
         small positive integers.
         :rtype: Stats
         """
-        # Create an ordered list using the numbers list.
-        # Note: I would normally use list.sort() but I discarded that option
-        # since it has a O(n log n) complexity.
         sorted_numbers = self._trimmed_and_sort_numbers()
-
-        # Generates a mappings of the min and max index of each number
-        # to later use.
         mappings = self.generate_mappings(sorted_numbers)
-        print(mappings)
-
-        # Return Stats instance.
         return Stats(sorted_numbers, mappings)

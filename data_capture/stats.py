@@ -131,6 +131,9 @@ class Stats:
         in the sorted list are between the given range.
         :rtype: int.
         """
+        if min_number > max_number:
+            min_number, max_number = max_number, min_number
+
         greater_counter = self.greater(max_number)
         less_counter = self.less(min_number)
         return self._len_numbers - greater_counter - less_counter
